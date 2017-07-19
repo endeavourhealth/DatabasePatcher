@@ -1,0 +1,97 @@
+<div class="module">
+	<div class="module-heading">
+		Dashboard
+
+	</div>
+	<div class="module-body">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Database Status <span class="fa fa-sm fa-refresh fa-refresh-animate" *ngIf="!databases"></span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="btn btn-success btn-sm"
+									(click)="refresh()">
+									<i class="fa fa-refresh"></i> Refresh
+							</button>
+							&nbsp;
+							<button class="btn btn-sm btn-info"
+									(click)="addDatabase()"
+									title="Add a new database configuration">
+								<i class="fa fa-plus"></i> Add Database
+							</button>
+
+						</div>
+						<div class='panel-body'>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>Regions:</label>
+									<select class="form-control" style="width:300px" (change)="refresh()" [(ngModel)]="selectedRegion">
+										<option *ngFor="let region of regions" value="{{region.id}}">{{region.name}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>Availability Zone:</label>
+									<select class="form-control" style="width:300px" (change)="refresh()" [(ngModel)]="selectedZone">
+										<option *ngFor="let zone of zones" value="{{zone.id}}">{{zone.zone}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="form-group">
+									<label>Database Types:</label>
+									<select class="form-control" style="width:300px" (change)="refresh()" [(ngModel)]="selectedType">
+										<option *ngFor="let type of dataTypes" value="{{type.id}}">{{type.type}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="table">
+								<table class="table table-striped table-condensed">
+									<thead>
+										<tr>
+											<th>Region</th>
+											<th>Zone</th>
+											<th>Type</th>
+											<th>Database Name</th>
+											<th>Hostname</th>
+											<th>Last Patch Time</th>
+											<th>Last Patch Status</th>
+											<th>Current Version</th>
+											<th>Next Patch Scheduled</th>
+											<th>Target Version</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let item of databases">
+											<td>{{item.region}}</td>
+											<td>{{item.zone}}</td>
+											<td>{{item.type}}</td>
+											<td>
+												<a style="cursor:pointer" (click)="editDatabase(item)">{{item.name}}</a>
+											</td>
+											<td>{{item.hostname}}</td>
+											<td>{{item.lastPatchTimestamp}}</td>
+											<td>
+
+												<div *ngIf="item.lastStatus=='0'"><a style="color:red;cursor:pointer" (click)="actionItem(item,'edit')">Failed</a></div>
+												<div *ngIf="item.lastStatus=='1'"><a style="color:green;cursor:pointer" (click)="actionItem(item,'edit')">Success</a></div>
+											</td>
+											<td>{{item.currentVersion}}</td>
+											<td>{{item.nextPatchTimestamp}}</td>
+											<td>{{item.targetVersion}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
